@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>현대백화점 브랜드 다변화 전략 제안</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .slide {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 900px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        .header {
+            background: #1E40AF; /* 현대백화점 컬러 */
+            color: white;
+            padding: 15px 30px;
+            margin: -30px -30px 20px -30px;
+            border-radius: 8px 8px 0 0;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        .chart-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .chart {
+            flex: 1;
+            min-width: 400px;
+            height: 280px;
+        }
+        .tables-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .table-box {
+            flex: 1;
+            min-width: 400px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .table-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1E40AF;
+            font-size: 16px;
+        }
+        .strategy-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .strategy-box {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #1E40AF;
+            background-color: #EFF6FF;
+        }
+        .strategy-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #1E40AF;
+        }
+        .highlight {
+            font-weight: 600;
+            color: #1E40AF;
+            text-decoration: underline;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+            text-align: right;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        th {
+            font-weight: 600;
+            color: #333;
+            background-color: #f1f3f5;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+        }
+        .badge-food {
+            background-color: #4263EB;
+        }
+        .badge-living {
+            background-color: #F59F00;
+        }
+        .badge-fashion {
+            background-color: #FA5252;
+        }
+        .badge-beauty {
+            background-color: #7950F2;
+        }
+        .badge-kids {
+            background-color: #40C057;
+        }
+        .percent-bar {
+            height: 20px;
+            border-radius: 10px;
+            background-color: #e9ecef;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+        .percent-fill {
+            height: 100%;
+            background-color: #1E40AF;
+            border-radius: 10px;
+        }
+        .opportunity-score {
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: white;
+        }
+        .score-high {
+            background-color: #2B8A3E;
+        }
+        .score-medium {
+            background-color: #F59F00;
+        }
+        .score-low {
+            background-color: #868E96;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="header">
+            <h1>현대백화점 브랜드 다변화 및 공백 영역 보완 전략</h1>
+        </div>
+        <div class="content">
+            <div class="chart-container">
+                <div class="chart" id="category-chart"></div>
+                <div class="chart" id="distribution-chart"></div>
+            </div>
+            
+            <div class="tables-container">
+                <div class="table-box">
+                    <div class="table-title">롯데백화점 단독 입점 주요 브랜드 (입점지점수 기준)</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>브랜드명</th>
+                                <th>카테고리</th>
+                                <th>입점지점수</th>
+                                <th>기회점수</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>올가니카</td>
+                                <td><span class="badge badge-food">식품</span></td>
+                                <td>12</td>
+                                <td><span class="opportunity-score score-high">높음</span></td>
+                            </tr>
+                            <tr>
+                                <td>메종드프로방스</td>
+                                <td><span class="badge badge-living">리빙</span></td>
+                                <td>11</td>
+                                <td><span class="opportunity-score score-high">높음</span></td>
+                            </tr>
+                            <tr>
+                                <td>비아파렌제</td>
+                                <td><span class="badge badge-fashion">패션</span></td>
+                                <td>10</td>
+                                <td><span class="opportunity-score score-high">높음</span></td>
+                            </tr>
+                            <tr>
+                                <td>닥터자르트</td>
+                                <td><span class="badge badge-beauty">뷰티</span></td>
+                                <td>9</td>
+                                <td><span class="opportunity-score score-medium">중간</span></td>
+                            </tr>
+                            <tr>
+                                <td>레고스토어</td>
+                                <td><span class="badge badge-kids">키즈</span></td>
+                                <td>8</td>
+                                <td><span class="opportunity-score score-high">높음</span></td>
+                            </tr>
+                            <tr>
+                                <td>홀리데이스튜디오</td>
+                                <td><span class="badge badge-fashion">패션</span></td>
+                                <td>8</td>
+                                <td><span class="opportunity-score score-medium">중간</span></td>
+                            </tr>
+                            <tr>
+                                <td>라콕스키친</td>
+                                <td><span class="badge badge-food">식품</span></td>
+                                <td>7</td>
+                                <td><span class="opportunity-score score-high">높음</span></td>
+                            </tr>
+                            <tr>
+                                <td>린엔드메이데이</td>
+                                <td><span class="badge badge-living">리빙</span></td>
+                                <td>7</td>
+                                <td><span class="opportunity-score score-medium">중간</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="table-box">
+                    <div class="table-title">카테고리별 주요 미입점 브랜드 현황</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>카테고리</th>
+                                <th>브랜드 수</th>
+                                <th>비중</th>
+                                <th>대표 브랜드</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge badge-fashion">패션</span> 패션/의류</td>
+                                <td>602</td>
+                                <td>
+                                    <div class="percent-bar">
+                                        <div class="percent-fill" style="width: 39%;"></div>
+                                    </div>
+                                    39%
+                                </td>
+                                <td>비아파렌제, 홀리데이스튜디오, 써스데이아일랜드</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-food">식품</span> 식품/식당가</td>
+                                <td>386</td>
+                                <td>
+                                    <div class="percent-bar">
+                                        <div class="percent-fill" style="width: 25%;"></div>
+                                    </div>
+                                    25%
+                                </td>
+                                <td>올가니카, 라콕스키친, 세니스베이커리</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-living">리빙</span> 리빙/가전</td>
+                                <td>294</td>
+                                <td>
+                                    <div class="percent-bar">
+                                        <div class="percent-fill" style="width: 19%;"></div>
+                                    </div>
+                                    19%
+                                </td>
+                                <td>메종드프로방스, 린엔드메이데이, 디뮤지엄</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-beauty">뷰티</span> 화장품/뷰티</td>
+                                <td>170</td>
+                                <td>
+                                    <div class="percent-bar">
+                                        <div class="percent-fill" style="width: 11%;"></div>
+                                    </div>
+                                    11%
+                                </td>
+                                <td>닥터자르트, 메디힐, 바이오더마</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-kids">키즈</span> 키즈/스포츠</td>
+                                <td>95</td>
+                                <td>
+                                    <div class="percent-bar">
+                                        <div class="percent-fill" style="width: 6%;"></div>
+                                    </div>
+                                    6%
+                                </td>
+                                <td>레고스토어, 마블주니어, 리틀포레스트</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="strategy-container">
+                <div class="strategy-box">
+                    <div class="strategy-title">식품관 차별화 전략</div>
+                    <p>현대백화점 <span class="highlight">식품관 혁신</span>을 위한 기회:</p>
+                    <ul>
+                        <li><b>올가니카(12개점)</b>: 프리미엄 친환경 식품 분야 선점 가능성</li>
+                        <li><b>라콕스키친(7개점)</b>: 젊은 세대 타겟 홈쿡 브랜드 강화</li>
+                        <li><b>세니스베이커리</b>: 지역별 특화 베이커리 라인업 확장</li>
+                    </ul>
+                    <p><b>➡ 한남점, 판교점 우선 도입 제안</b></p>
+                </div>
+                
+                <div class="strategy-box">
+                    <div class="strategy-title">리빙 브랜드 보강 전략</div>
+                    <p>현대백화점 <span class="highlight">리빙관 다양성</span> 강화:</p>
+                    <ul>
+                        <li><b>메종드프로방스(11개점)</b>: 프렌치 프로방스 홈퍼니싱 도입</li>
+                        <li><b>린엔드메이데이(7개점)</b>: 친환경 라이프스타일 제품 보강</li>
+                        <li><b>디뮤지엄</b>: 아트 콜라보 홈데코 라인 개발</li>
+                    </ul>
+                    <p><b>➡ 목동점, 디큐브시티점 우선 도입 제안</b></p>
+                </div>
+                
+                <div class="strategy-box">
+                    <div class="strategy-title">패션 차별화 전략</div>
+                    <p>현대백화점 <span class="highlight">패션 브랜드 다양성</span> 확대:</p>
+                    <ul>
+                        <li><b>비아파렌제(10개점)</b>: 이탈리안 감성 여성복 라인업 보강</li>
+                        <li><b>홀리데이스튜디오(8개점)</b>: MZ세대 타겟 캐주얼 브랜드</li>
+                        <li><b>써스데이아일랜드</b>: 컨템포러리 감성 패션 영역 확장</li>
+                    </ul>
+                    <p><b>➡ 압구정본점, 무역센터점 우선 도입 제안</b></p>
+                </div>
+            </div>
+            
+            <div class="strategy-container">
+                <div class="strategy-box">
+                    <div class="strategy-title">키즈 콘텐츠 강화 전략</div>
+                    <p>현대백화점 <span class="highlight">키즈 카테고리</span> 강화:</p>
+                    <ul>
+                        <li><b>레고스토어(8개점)</b>: 체험형 키즈 앵커 매장으로 운영</li>
+                        <li><b>마블주니어</b>: 캐릭터 기반 키즈 라인업 확장</li>
+                        <li><b>키즈 복합문화공간</b>: 교육+놀이+쇼핑 융합 공간 구성</li>
+                    </ul>
+                    <p><b>➡ 킨텍스점, 천호점 우선 도입 제안</b></p>
+                </div>
+                
+                <div class="strategy-box">
+                    <div class="strategy-title">뷰티 브랜드 보강 전략</div>
+                    <p>현대백화점 <span class="highlight">뷰티 라인업</span> 확장:</p>
+                    <ul>
+                        <li><b>닥터자르트(9개점)</b>: 더마 화장품 카테고리 강화</li>
+                        <li><b>메디힐</b>: 마스크팩 특화 브랜드로 뷰티 존 다양화</li>
+                        <li><b>클린 뷰티 존</b>: 친환경/비건 화장품 특화공간 구성</li>
+                    </ul>
+                    <p><b>➡ 신촌점, 미아점 우선 도입 제안</b></p>
+                </div>
+                
+                <div class="strategy-box">
+                    <div class="strategy-title">전략적 브랜드 유치 로드맵</div>
+                    <p><span class="highlight">단계별 접근</span> 전략:</p>
+                    <ul>
+                        <li><b>1단계(~6개월)</b>: 입점지점수 10개 이상 핵심 브랜드 우선 유치</li>
+                        <li><b>2단계(6~12개월)</b>: 카테고리별 차별화 브랜드 선별 유치</li>
+                        <li><b>3단계(12개월~)</b>: 자체 개발 브랜드 및 콜라보레이션 확대</li>
+                    </ul>
+                    <p><b>➡ 월별 타겟 브랜드 3~5개 집중 유치 제안</b></p>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        // 카테고리별 브랜드 수 차트
+        const categoryData = [
+            { category: "패션/의류", count: 602, percentage: 39 },
+            { category: "식품/식당가", count: 386, percentage: 25 },
+            { category: "리빙/가전", count: 294, percentage: 19 },
+            { category: "화장품/뷰티", count: 170, percentage: 11 },
+            { category: "키즈/스포츠", count: 95, percentage: 6 }
+        ];
+
+        const ctx1 = document.createElement('canvas');
+        document.getElementById('category-chart').appendChild(ctx1);
+
+        new Chart(ctx1, {
+            type: 'pie',
+            data: {
+                labels: categoryData.map(d => d.category),
+                datasets: [{
+                    data: categoryData.map(d => d.count),
+                    backgroundColor: [
+                        '#FA5252', // 패션
+                        '#4263EB', // 식품
+                        '#F59F00', // 리빙
+                        '#7950F2', // 뷰티
+                        '#40C057'  // 키즈
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '카테고리별 미입점 브랜드 구성',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    },
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            generateLabels: function(chart) {
+                                const data = chart.data;
+                                if (data.labels.length && data.datasets.length) {
+                                    return data.labels.map(function(label, i) {
+                                        const value = data.datasets[0].data[i];
+                                        const total = data.datasets[0].data.reduce((acc, val) => acc + val, 0);
+                                        const percentage = Math.round((value / total) * 100) + '%';
+                                        return {
+                                            text: `${label} (${percentage})`,
+                                            fillStyle: data.datasets[0].backgroundColor[i],
+                                            hidden: false,
+                                            index: i
+                                        };
+                                    });
+                                }
+                                return [];
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const total = context.dataset.data.reduce((acc, val) => acc + val, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return `${label}: ${value}개 (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 입점지점수 분포 차트
+        const distributionData = {
+            labels: ['10개 이상', '7-9개', '4-6개', '2-3개', '1개'],
+            data: [42, 85, 296, 521, 603]
+        };
+
+        const ctx2 = document.createElement('canvas');
+        document.getElementById('distribution-chart').appendChild(ctx2);
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: distributionData.labels,
+                datasets: [{
+                    label: '브랜드 수',
+                    data: distributionData.data,
+                    backgroundColor: '#1E40AF',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '미입점 브랜드의 롯데백화점 입점지점수 분포',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw || 0;
+                                const total = distributionData.data.reduce((acc, val) => acc + val, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return `${value}개 브랜드 (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '브랜드 수'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '롯데백화점 입점지점수'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>롯데백화점 수도권 지점별 매출 vs 브랜드 다양성 분석</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .slide {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 900px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        .header {
+            background: #e63740;
+            color: white;
+            padding: 15px 30px;
+            margin: -30px -30px 20px -30px;
+            border-radius: 8px 8px 0 0;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .chart-container {
+            height: 400px;
+            margin-bottom: 20px;
+        }
+        .analysis {
+            display: flex;
+            gap: 20px;
+        }
+        .analysis-box {
+            flex: 1;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .low-efficiency {
+            background-color: #FFE8E8;
+            border-left: 4px solid #e63740;
+        }
+        .high-efficiency {
+            background-color: #E8F4FF;
+            border-left: 4px solid #2c82c9;
+        }
+        .analysis-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .highlight {
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+            text-align: right;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="header">
+            <h1>롯데백화점 수도권 지점별 매출 순위 vs 브랜드 다양성 (2024)</h1>
+        </div>
+        <div class="content">
+            <div class="chart-container" id="chart"></div>
+            
+            <div class="analysis">
+                <div class="analysis-box low-efficiency">
+                    <div class="analysis-title">브랜드 수 대비 매출이 낮은 지점</div>
+                    <p><span class="highlight">운영 효율성 저하</span> 가능성이 있는 지점들:</p>
+                    <ul>
+                        <li><b>영등포점</b>: 브랜드 다양성에 비해 매출 저조</li>
+                        <li><b>안양점</b>: 동일 브랜드 수 대비 타 지점보다 낮은 성과</li>
+                        <li><b>중동점</b>: 매출 대비 브랜드 과다 보유 상태</li>
+                    </ul>
+                    <p>→ <b>타사 벤치마크 대상</b>으로 선정하여 운영 효율성 개선 필요</p>
+                </div>
+                
+                <div class="analysis-box high-efficiency">
+                    <div class="analysis-title">브랜드 수 대비 매출이 높은 지점</div>
+                    <p><span class="highlight">집객력이 강한 점포</span>로 확인된 지점들:</p>
+                    <ul>
+                        <li><b>본점(명동)</b>: 최고 효율성 지점, 관광객 유입 강점</li>
+                        <li><b>잠실점</b>: 롯데월드 연계 시너지 효과</li>
+                        <li><b>분당점</b>: 고소득층 밀집 지역 입지 우수</li>
+                    </ul>
+                    <p>→ <b>전략 입점 후보지</b>로 제안, 프리미엄 브랜드 추가 유치</p>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script>
+        // 데이터 샘플 (실제 데이터로 대체 필요)
+        const data = [
+            { branch: "본점(명동)", sales: 8700, brands: 450, efficiency: 19.3 },
+            { branch: "잠실점", sales: 7600, brands: 420, efficiency: 18.1 },
+            { branch: "김포공항점", sales: 5900, brands: 350, efficiency: 16.9 },
+            { branch: "분당점", sales: 5400, brands: 300, efficiency: 18.0 },
+            { branch: "노원점", sales: 4800, brands: 280, efficiency: 17.1 },
+            { branch: "수원점", sales: 4500, brands: 270, efficiency: 16.7 },
+            { branch: "일산점", sales: 4300, brands: 260, efficiency: 16.5 },
+            { branch: "영등포점", sales: 3900, brands: 290, efficiency: 13.4 },
+            { branch: "안양점", sales: 3600, brands: 270, efficiency: 13.3 },
+            { branch: "중동점", sales: 3400, brands: 275, efficiency: 12.4 }
+        ];
+
+        // 차트 생성
+        const margin = { top: 40, right: 150, bottom: 60, left: 80 };
+        const width = 800 - margin.left - margin.right;
+        const height = 400 - margin.top - margin.bottom;
+
+        const svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // X 및 Y 축 설정
+        const x = d3.scaleLinear()
+            .domain([250, 470])
+            .range([0, width]);
+
+        const y = d3.scaleLinear()
+            .domain([3000, 9000])
+            .range([height, 0]);
+
+        // 버블 크기 설정
+        const z = d3.scaleLinear()
+            .domain([d3.min(data, d => d.efficiency), d3.max(data, d => d.efficiency)])
+            .range([8, 20]);
+
+        // 컬러 스케일 설정
+        const color = d3.scaleLinear()
+            .domain([d3.min(data, d => d.efficiency), d3.max(data, d => d.efficiency)])
+            .range(["#ff8a80", "#2196f3"]);
+
+        // 축 추가
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x).ticks(5))
+            .append("text")
+            .attr("fill", "#000")
+            .attr("x", width / 2)
+            .attr("y", 40)
+            .attr("text-anchor", "middle")
+            .text("브랜드 수 (개)");
+
+        svg.append("g")
+            .call(d3.axisLeft(y).ticks(5))
+            .append("text")
+            .attr("fill", "#000")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -60)
+            .attr("x", -height / 2)
+            .attr("text-anchor", "middle")
+            .text("매출액 (억원)");
+
+        // 버블 추가
+        svg.append("g")
+            .selectAll("dot")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("cx", d => x(d.brands))
+            .attr("cy", d => y(d.sales))
+            .attr("r", d => z(d.efficiency))
+            .style("fill", d => color(d.efficiency))
+            .style("opacity", 0.7)
+            .attr("stroke", "black")
+            .style("stroke-width", 1);
+
+        // 지점명 레이블 추가
+        svg.append("g")
+            .selectAll("text")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("x", d => x(d.brands) + 15)
+            .attr("y", d => y(d.sales))
+            .text(d => d.branch)
+            .style("font-size", "12px")
+            .style("font-weight", d => d.efficiency > 17 || d.efficiency < 14 ? "bold" : "normal");
+
+        // 추세선 추가
+        const regression = d3.regressionLinear()
+            .x(d => d.brands)
+            .y(d => d.sales)
+            .domain([250, 470]);
+
+        svg.append("g")
+            .append("line")
+            .attr("x1", x(regression.domain()[0]))
+            .attr("y1", y(regression.predict(regression.domain()[0])[1]))
+            .attr("x2", x(regression.domain()[1]))
+            .attr("y2", y(regression.predict(regression.domain()[1])[1]))
+            .style("stroke", "#888")
+            .style("stroke-width", 1)
+            .style("stroke-dasharray", "5,5");
+
+        // 범례 추가
+        const legendSize = 20;
+        const legend = svg.append("g")
+            .attr("transform", `translate(${width + 20}, 0)`);
+
+        legend.append("text")
+            .attr("x", 0)
+            .attr("y", 10)
+            .text("효율성 지수")
+            .style("font-weight", "bold");
+
+        const legendColors = [
+            { value: d3.min(data, d => d.efficiency), text: "낮음" },
+            { value: (d3.min(data, d => d.efficiency) + d3.max(data, d => d.efficiency)) / 2, text: "중간" },
+            { value: d3.max(data, d => d.efficiency), text: "높음" }
+        ];
+
+        legendColors.forEach((d, i) => {
+            legend.append("circle")
+                .attr("cx", 10)
+                .attr("cy", 40 + i * 30)
+                .attr("r", 6)
+                .style("fill", color(d.value));
+
+            legend.append("text")
+                .attr("x", 25)
+                .attr("y", 45 + i * 30)
+                .text(d.text)
+                .style("font-size", "12px");
+        });
+
+        // 추가 범례: 버블 크기
+        legend.append("text")
+            .attr("x", 0)
+            .attr("y", 130)
+            .text("버블 크기 = 효율성")
+            .style("font-size", "12px");
+
+        // 차트 제목
+        svg.append("text")
+            .attr("x", width / 2)
+            .attr("y", -20)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("font-weight", "bold")
+            .text("브랜드 다양성과 매출액 관계 분석");
+    </script>
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>롯데백화점 카테고리별 비중 비교 분석</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .slide {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 900px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        .header {
+            background: #e63740;
+            color: white;
+            padding: 15px 30px;
+            margin: -30px -30px 20px -30px;
+            border-radius: 8px 8px 0 0;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .chart-container {
+            display: flex;
+            gap: 20px;
+        }
+        .chart {
+            flex: 1;
+            height: 300px;
+        }
+        .radar-chart {
+            height: 400px;
+            margin-top: 20px;
+        }
+        .analysis {
+            display: flex;
+            gap: 20px;
+        }
+        .analysis-box {
+            flex: 1;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .comparison-box {
+            background-color: #FFF9E6;
+            border-left: 4px solid #ffa000;
+        }
+        .synergy-box {
+            background-color: #E8F5E9;
+            border-left: 4px solid #43a047;
+        }
+        .analysis-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .highlight {
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+            text-align: right;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+        }
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            margin-right: 5px;
+            border-radius: 2px;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .high {
+            color: #1a5db4;
+            font-weight: bold;
+        }
+        .low {
+            color: #b71c1c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="header">
+            <h1>롯데백화점 카테고리별 비중 비교 분석 (2024)</h1>
+        </div>
+        <div class="content">
+            <div class="chart-container">
+                <div class="chart" id="chart1"></div>
+                <div class="chart" id="chart2"></div>
+            </div>
+            
+            <div class="radar-chart" id="radar-chart"></div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>카테고리</th>
+                            <th>롯데 평균</th>
+                            <th>신세계 평균</th>
+                            <th>현대 평균</th>
+                            <th>갤러리아 평균</th>
+                            <th>격차 분석</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>의류/패션</td>
+                            <td>42%</td>
+                            <td>38%</td>
+                            <td>36%</td>
+                            <td>45%</td>
+                            <td><span class="high">+6%p</span> (현대 대비)</td>
+                        </tr>
+                        <tr>
+                            <td>화장품/뷰티</td>
+                            <td>18%</td>
+                            <td>22%</td>
+                            <td>16%</td>
+                            <td>20%</td>
+                            <td><span class="high">+2%p</span> (현대 대비)</td>
+                        </tr>
+                        <tr>
+                            <td>리빙/가전</td>
+                            <td>14%</td>
+                            <td>16%</td>
+                            <td>22%</td>
+                            <td>12%</td>
+                            <td><span class="low">-8%p</span> (현대 대비)</td>
+                        </tr>
+                        <tr>
+                            <td>식품/식당가</td>
+                            <td>16%</td>
+                            <td>14%</td>
+                            <td>12%</td>
+                            <td>13%</td>
+                            <td><span class="high">+4%p</span> (현대 대비)</td>
+                        </tr>
+                        <tr>
+                            <td>기타(키즈/스포츠 등)</td>
+                            <td>10%</td>
+                            <td>10%</td>
+                            <td>14%</td>
+                            <td>10%</td>
+                            <td><span class="low">-4%p</span> (현대 대비)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="analysis">
+                <div class="analysis-box comparison-box">
+                    <div class="analysis-title">카테고리 비중 불균형 분석</div>
+                    <p><span class="highlight">과다/부족 카테고리 도출</span></p>
+                    <ul>
+                        <li><b>과다 비중 카테고리</b>: 의류/패션(+6%p), 식품(+4%p)</li>
+                        <li><b>부족 비중 카테고리</b>: 리빙/가전(-8%p), 키즈/스포츠(-4%p)</li>
+                    </ul>
+                    <p><b>지점별 불균형:</b></p>
+                    <ul>
+                        <li><b>잠실점</b>: 의류 비중 과다(48%), 리빙 부족(12%)</li>
+                        <li><b>분당점</b>: 화장품 비중 과다(24%), 키즈/스포츠 부족(7%)</li>
+                        <li><b>영등포점</b>: 식품 비중 과다(19%), 리빙 부족(11%)</li>
+                    </ul>
+                </div>
+                
+                <div class="analysis-box synergy-box">
+                    <div class="analysis-title">현대백화점과의 시너지 가능성</div>
+                    <p><span class="highlight">현대백화점 강점 분야와 연계</span></p>
+                    <ul>
+                        <li><b>프리미엄 리빙</b>: 현대 대비 -8%p 격차, 강화 필요</li>
+                        <li><b>리빙 특화 입점 제안:</b>
+                            <ul>
+                                <li>잠실점: 현대의 리빙 브랜드 5개 입점 우선 추진</li>
+                                <li>분당점: 프리미엄 주방용품 카테고리 강화</li>
+                            </ul>
+                        </li>
+                        <li><b>키즈/스포츠 복합화:</b> 영등포점에 패밀리 타겟 복합문화공간 도입</li>
+                    </ul>
+                    <p><b>➡ 현대백화점과 롯데의 차별적 강점 결합으로 시너지 창출</b></p>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        // 데이터 샘플 (실제 데이터로 대체 필요)
+        const lotteBranchData = [
+            { branch: "본점", fashion: 40, beauty: 20, living: 15, food: 15, others: 10 },
+            { branch: "잠실점", fashion: 48, beauty: 18, living: 12, food: 16, others: 6 },
+            { branch: "분당점", fashion: 38, beauty: 24, living: 16, food: 15, others: 7 },
+            { branch: "영등포점", fashion: 41, beauty: 17, living: 11, food: 19, others: 12 },
+            { branch: "노원점", fashion: 43, beauty: 16, living: 14, food: 17, others: 10 }
+        ];
+        
+        const competitors = [
+            { name: "롯데", fashion: 42, beauty: 18, living: 14, food: 16, others: 10 },
+            { name: "신세계", fashion: 38, beauty: 22, living: 16, food: 14, others: 10 },
+            { name: "현대", fashion: 36, beauty: 16, living: 22, food: 12, others: 14 },
+            { name: "갤러리아", fashion: 45, beauty: 20, living: 12, food: 13, others: 10 }
+        ];
+
+        // 스택 바 차트 (롯데 지점별 카테고리 비중)
+        const stack = d3.stack()
+            .keys(["fashion", "beauty", "living", "food", "others"])
+            .order(d3.stackOrderNone)
+            .offset(d3.stackOffsetNone);
+
+        const stackedData = stack(lotteBranchData);
+        
+        const margin = { top: 30, right: 20, bottom: 50, left: 50 };
+        const width = 400 - margin.left - margin.right;
+        const height = 300 - margin.top - margin.bottom;
+
+        const svg1 = d3.select("#chart1")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // 색상 스케일
+        const color = d3.scaleOrdinal()
+            .domain(["fashion", "beauty", "living", "food", "others"])
+            .range(["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f"]);
+
+        // X축 스케일
+        const x = d3.scaleBand()
+            .domain(lotteBranchData.map(d => d.branch))
+            .range([0, width])
+            .padding(0.3);
+
+        // Y축 스케일
+        const y = d3.scaleLinear()
+            .domain([0, 100])
+            .range([height, 0]);
+
+        // X축 그리기
+        svg1.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+            .style("font-size", "10px");
+
+        // Y축 그리기
+        svg1.append("g")
+            .call(d3.axisLeft(y).ticks(5).tickFormat(d => d + "%"));
+
+        // 스택 바 그리기
+        svg1.append("g")
+            .selectAll("g")
+            .data(stackedData)
+            .enter().append("g")
+            .attr("fill", (d, i) => color(d.key))
+            .selectAll("rect")
+            .data(d => d)
+            .enter().append("rect")
+            .attr("x", d => x(d.data.branch))
+            .attr("y", d => y(d[1]))
+            .attr("height", d => y(d[0]) - y(d[1]))
+            .attr("width", x.bandwidth());
+
+        // 차트 제목
+        svg1.append("text")
+            .attr("x", width / 2)
+            .attr("y", -10)
+            .attr("text-anchor", "middle")
+            .style("font-size", "14px")
+            .style("font-weight", "bold")
+            .text("롯데백화점 지점별 카테고리 비중");
+
+        // 범례
+        const legend1 = svg1.append("g")
+            .attr("transform", `translate(0,${height + 25})`);
+
+        const categories = [
+            { key: "fashion", label: "의류/패션" },
+            { key: "beauty", label: "화장품/뷰티" },
+            { key: "living", label: "리빙/가전" },
+            { key: "food", label: "식품/식당가" },
+            { key: "others", label: "기타" }
+        ];
+
+        // 두 번째 차트 (경쟁사 비교)
+        const svg2 = d3.select("#chart2")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // X축 스케일 (경쟁사)
+        const x2 = d3.scaleBand()
+            .domain(competitors.map(d => d.name))
+            .range([0, width])
+            .padding(0.3);
+
+        // 스택 데이터 (경쟁사)
+        const stackedCompetitors = stack(competitors);
+
+        // X축 그리기 (경쟁사)
+        svg2.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x2))
+            .selectAll("text")
+            .style("font-size", "10px");
+
+        // Y축 그리기 (경쟁사)
+        svg2.append("g")
+            .call(d3.axisLeft(y).ticks(5).tickFormat(d => d + "%"));
+
+        // 스택 바 그리기 (경쟁사)
+        svg2.append("g")
+            .selectAll("g")
+            .data(stackedCompetitors)
+            .enter().append("g")
+            .attr("fill", (d, i) => color(d.key))
+            .selectAll("rect")
+            .data(d => d)
+            .enter().append("rect")
+            .attr("x", d => x2(d.data.name))
+            .attr("y", d => y(d[1]))
+            .attr("height", d => y(d[0]) - y(d[1]))
+            .attr("width", x2.bandwidth());
+
+        // 차트 제목 (경쟁사)
+        svg2.append("text")
+            .attr("x", width / 2)
+            .attr("y", -10)
+            .attr("text-anchor", "middle")
+            .style("font-size", "14px")
+            .style("font-weight", "bold")
+            .text("백화점 브랜드별 카테고리 비중");
+
+        // 공통 범례
+        const legendData = [
+            { key: "fashion", label: "의류/패션", color: "#4e79a7" },
+            { key: "beauty", label: "화장품/뷰티", color: "#f28e2c" },
+            { key: "living", label: "리빙/가전", color: "#e15759" },
+            { key: "food", label: "식품/식당가", color: "#76b7b2" },
+            { key: "others", label: "기타", color: "#59a14f" }
+        ];
+
+        const legend = d3.select(".chart-container")
+            .append("div")
+            .attr("class", "legend");
+
+        legendData.forEach(item => {
+            const legendItem = legend.append("div")
+                .attr("class", "legend-item");
+            
+            legendItem.append("div")
+                .attr("class", "legend-color")
+                .style("background-color", item.color);
+            
+            legendItem.append("div")
+                .text(item.label);
+        });
+
+        // 레이더 차트
+        const ctx = document.createElement('canvas');
+        document.getElementById('radar-chart').appendChild(ctx);
+
+        const radarChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['의류/패션', '화장품/뷰티', '리빙/가전', '식품/식당가', '키즈/스포츠'],
+                datasets: [
+                    {
+                        label: '롯데백화점',
+                        data: [42, 18, 14, 16, 10],
+                        backgroundColor: 'rgba(230, 55, 64, 0.2)',
+                        borderColor: 'rgba(230, 55, 64, 1)',
+                        pointBackgroundColor: 'rgba(230, 55, 64, 1)',
+                        pointRadius: 4
+                    },
+                    {
+                        label: '현대백화점',
+                        data: [36, 16, 22, 12, 14],
+                        backgroundColor: 'rgba(44, 130, 201, 0.2)',
+                        borderColor: 'rgba(44, 130, 201, 1)',
+                        pointBackgroundColor: 'rgba(44, 130, 201, 1)',
+                        pointRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '롯데백화점 vs 현대백화점 카테고리 강점 비교',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: true
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 50,
+                        ticks: {
+                            stepSize: 10,
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
