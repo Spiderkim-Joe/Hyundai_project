@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>백화점 매출 성장률과 브랜드 구성 변화 분석</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .slide {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 900px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        .header {
+            background: #e63740;
+            color: white;
+            padding: 15px 30px;
+            margin: -30px -30px 20px -30px;
+            border-radius: 8px 8px 0 0;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .charts-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .chart {
+            flex: 1;
+            min-width: 400px;
+            height: 300px;
+        }
+        .analysis {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .analysis-box {
+            flex: 1;
+            min-width: 280px;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .top-performers {
+            background-color: #E3F2FD;
+            border-left: 4px solid #1976D2;
+        }
+        .bottom-performers {
+            background-color: #FFEBEE;
+            border-left: 4px solid #D32F2F;
+        }
+        .insights {
+            background-color: #E8F5E9;
+            border-left: 4px solid #388E3C;
+        }
+        .analysis-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .highlight {
+            font-weight: 600;
+            color: #D32F2F;
+        }
+        .positive {
+            color: #388E3C;
+            font-weight: bold;
+        }
+        .negative {
+            color: #D32F2F;
+            font-weight: bold;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .growth-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .growth-positive {
+            background-color: #4CAF50;
+        }
+        .growth-negative {
+            background-color: #F44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="header">
+            <h1>롯데백화점 매출 성장률과 브랜드 구성 변화 분석 (2024)</h1>
+        </div>
+        <div class="content">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>지점명</th>
+                            <th>2024년 매출(억원)</th>
+                            <th>성장률(%)</th>
+                            <th>브랜드 수</th>
+                            <th>브랜드당 매출(억원)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>잠실점</td>
+                            <td>34,710</td>
+                            <td><span class="growth-indicator growth-positive"></span><span class="positive">+10.5%</span></td>
+                            <td>878</td>
+                            <td>39.53</td>
+                        </tr>
+                        <tr>
+                            <td>본점</td>
+                            <td>25,340</td>
+                            <td><span class="growth-indicator growth-positive"></span><span class="positive">+2.3%</span></td>
+                            <td>661</td>
+                            <td>38.34</td>
+                        </tr>
+                        <tr>
+                            <td>노원점</td>
+                            <td>11,527</td>
+                            <td><span class="growth-indicator growth-positive"></span><span class="positive">+1.9%</span></td>
+                            <td>400</td>
+                            <td>28.82</td>
+                        </tr>
+                        <tr>
+                            <td>일산점</td>
+                            <td>6,406</td>
+                            <td><span class="growth-indicator growth-positive"></span><span class="positive">+1.8%</span></td>
+                            <td>234</td>
+                            <td>27.38</td>
+                        </tr>
+                        <tr style="border-top: 2px solid #ddd;">
+                            <td>평택점</td>
+                            <td>4,228</td>
+                            <td><span class="growth-indicator growth-negative"></span><span class="negative">-2.2%</span></td>
+                            <td>195</td>
+                            <td>21.68</td>
+                        </tr>
+                        <tr>
+                            <td>중동점</td>
+                            <td>7,912</td>
+                            <td><span class="growth-indicator growth-negative"></span><span class="negative">-2.1%</span></td>
+                            <td>265</td>
+                            <td>29.86</td>
+                        </tr>
+                        <tr>
+                            <td>영등포점</td>
+                            <td>12,184</td>
+                            <td><span class="growth-indicator growth-negative"></span><span class="negative">-2.0%</span></td>
+                            <td>440</td>
+                            <td>27.69</td>
+                        </tr>
+                        <tr>
+                            <td>수원점</td>
+                            <td>3,806</td>
+                            <td><span class="growth-indicator growth-negative"></span><span class="negative">-2.0%</span></td>
+                            <td>185</td>
+                            <td>20.57</td>
+                        </tr>
+                        <tr>
+                            <td>안산점</td>
+                            <td>1,688</td>
+                            <td><span class="growth-indicator growth-negative"></span><span class="negative">-4.9%</span></td>
+                            <td>110</td>
+                            <td>15.35</td>
+                        </tr>
+                        <tr>
+                            <td>건대스타시티점</td>
+                            <td>9,350</td>
+                            <td><span class="growth-indicator growth-negative"></span><span class="negative">-7.0%</span></td>
+                            <td>283</td>
+                            <td>33.04</td>
+                        </tr>
+                        <tr>
+                            <td>김포공항점</td>
+                            <td>7,980</td>
+                            <td><span class="growth-indicator growth-negative"></span><span class="negative">-13.2%</span></td>
+                            <td>215</td>
+                            <td>37.12</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="charts-container">
+                <div class="chart" id="growth-chart"></div>
+                <div class="chart" id="brand-efficiency-chart"></div>
+            </div>
+            
+            <div class="charts-container">
+                <div class="chart" id="scatter-chart"></div>
+            </div>
+            
+            <div class="analysis">
+                <div class="analysis-box top-performers">
+                    <div class="analysis-title">성장률 상위 점포 특성</div>
+                    <ul>
+                        <li><b>잠실점 (+10.5%)</b>: 규모의 경제 활용, 브랜드당 매출 최상위(39.53억원), 핵심 앵커 브랜드 보유</li>
+                        <li><b>본점 (+2.3%)</b>: 프리미엄 브랜드 구성, 브랜드당 매출 효율성 우수(38.34억원)</li>
+                        <li><b>노원점 (+1.9%)</b>: 지역 중심 점포로서 충성고객 확보, 적절한 브랜드 포트폴리오</li>
+                    </ul>
+                    <p><b>공통 특성:</b> 대형 앵커 브랜드 보유, 높은 브랜드당 매출 효율성</p>
+                </div>
+                
+                <div class="analysis-box bottom-performers">
+                    <div class="analysis-title">성장률 하위 점포 특성</div>
+                    <ul>
+                        <li><b>김포공항점 (-13.2%)</b>: 여행객 감소 영향, 브랜드당 매출 효율은 우수(37.12억원)하나 전체 매출 감소</li>
+                        <li><b>건대스타시티점 (-7.0%)</b>: 경쟁 심화 지역, 브랜드 효율성 대비 성장 저조</li>
+                        <li><b>안산점 (-4.9%)</b>: 브랜드당 매출 최하위(15.35억원), 앵커 브랜드 부재</li>
+                    </ul>
+                    <p><b>공통 특성:</b> 지역 경쟁 심화, 차별화 부족, 브랜드 운영 효율성 저하</p>
+                </div>
+                
+                <div class="analysis-box insights">
+                    <div class="analysis-title">브랜드 구성이 성장에 미치는 영향</div>
+                    <ul>
+                        <li><b>프리미엄 앵커 효과:</b> 잠실점, 본점은 핵심 프리미엄 브랜드 보유로 집객력 강화</li>
+                        <li><b>브랜드 효율성:</b> 브랜드당 매출 39억원 이상 점포는 모두 성장세 기록</li>
+                        <li><b>지역 맞춤형 포트폴리오:</b> 지역 특성에 맞는 브랜드 구성이 성장 견인</li>
+                        <li><b>시사점:</b> 낮은 효율성 점포는 브랜드 포트폴리오 재구성 필요 - <span class="highlight">안산점, 수원점, 평택점</span>이 우선 대상</li>
+                    </ul>
+                    <p><b>전략적 제안:</b> 성장 점포의 브랜드 운영 효율성 벤치마킹, 특화 브랜드 도입으로 지역 차별화</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        // 데이터 (인터넷면세점 제외)
+        const storeData = [
+            { name: "잠실점", sales: 34710, growth: 10.5, brands: 878, efficiency: 39.53 },
+            { name: "본점", sales: 25340, growth: 2.3, brands: 661, efficiency: 38.34 },
+            { name: "영등포점", sales: 12184, growth: -2.0, brands: 440, efficiency: 27.69 },
+            { name: "노원점", sales: 11527, growth: 1.9, brands: 400, efficiency: 28.82 },
+            { name: "건대스타시티점", sales: 9350, growth: -7.0, brands: 283, efficiency: 33.04 },
+            { name: "김포공항점", sales: 7980, growth: -13.2, brands: 215, efficiency: 37.12 },
+            { name: "중동점", sales: 7912, growth: -2.1, brands: 265, efficiency: 29.86 },
+            { name: "일산점", sales: 6406, growth: 1.8, brands: 234, efficiency: 27.38 },
+            { name: "평택점", sales: 4228, growth: -2.2, brands: 195, efficiency: 21.68 },
+            { name: "수원점", sales: 3806, growth: -2.0, brands: 185, efficiency: 20.57 },
+            { name: "안산점", sales: 1688, growth: -4.9, brands: 110, efficiency: 15.35 }
+        ];
+
+        // 성장률 정렬
+        storeData.sort((a, b) => b.growth - a.growth);
+
+        // 성장률 차트
+        const ctx1 = document.createElement('canvas');
+        document.getElementById('growth-chart').appendChild(ctx1);
+
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: storeData.map(d => d.name),
+                datasets: [{
+                    label: '성장률 (%)',
+                    data: storeData.map(d => d.growth),
+                    backgroundColor: storeData.map(d => d.growth >= 0 ? 'rgba(75, 192, 192, 0.7)' : 'rgba(255, 99, 132, 0.7)'),
+                    borderColor: storeData.map(d => d.growth >= 0 ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)'),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '지점별 매출 성장률 (2024)',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    },
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: true
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 브랜드 효율성 차트 - 효율성 순 정렬
+        const efficiencyData = [...storeData].sort((a, b) => b.efficiency - a.efficiency);
+
+        const ctx2 = document.createElement('canvas');
+        document.getElementById('brand-efficiency-chart').appendChild(ctx2);
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: efficiencyData.map(d => d.name),
+                datasets: [{
+                    label: '브랜드당 매출 (억원)',
+                    data: efficiencyData.map(d => d.efficiency),
+                    backgroundColor: efficiencyData.map(d => d.growth >= 0 ? 'rgba(54, 162, 235, 0.7)' : 'rgba(255, 159, 64, 0.7)'),
+                    borderColor: efficiencyData.map(d => d.growth >= 0 ? 'rgba(54, 162, 235, 1)' : 'rgba(255, 159, 64, 1)'),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '지점별 브랜드당 매출 효율성',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // 산점도 차트
+        const ctx3 = document.createElement('canvas');
+        document.getElementById('scatter-chart').appendChild(ctx3);
+
+        new Chart(ctx3, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: '지점별 데이터',
+                    data: storeData.map(d => ({
+                        x: d.efficiency,
+                        y: d.growth,
+                        r: Math.sqrt(d.brands) / 5
+                    })),
+                    backgroundColor: storeData.map(d => 
+                        d.growth >= 3 ? 'rgba(75, 192, 192, 0.7)' : 
+                        d.growth >= 0 ? 'rgba(54, 162, 235, 0.7)' : 
+                        d.growth >= -5 ? 'rgba(255, 159, 64, 0.7)' : 
+                        'rgba(255, 99, 132, 0.7)'
+                    ),
+                    borderColor: 'rgba(0, 0, 0, 0.1)',
+                    borderWidth: 1,
+                    pointRadius: storeData.map(d => Math.sqrt(d.brands) / 2),
+                    pointHoverRadius: storeData.map(d => Math.sqrt(d.brands) / 1.5)
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '브랜드 효율성 vs 성장률 상관관계',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const point = context.raw;
+                                const index = context.dataIndex;
+                                const store = storeData[index];
+                                return [
+                                    `${store.name}`,
+                                    `성장률: ${store.growth}%`, 
+                                    `브랜드당 매출: ${store.efficiency}억원`,
+                                    `브랜드 수: ${store.brands}개`
+                                ];
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '브랜드당 매출 (억원)'
+                        },
+                        min: 15,
+                        max: 42
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '성장률 (%)'
+                        },
+                        min: -15,
+                        max: 12
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
